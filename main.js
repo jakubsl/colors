@@ -23,7 +23,7 @@ var initialize = function() {
   canvasContainer = $('.canvas-container');
   height = canvasContainer.height();
   width = canvasContainer.width();
-  colors = ['#ff0000', '#00ff00', '#0000ff'];
+  colors = ['#ff0035', '#48ccff', '#0DFE8F'];
   pads.rows = 2;
   pads.cols = 2;
 

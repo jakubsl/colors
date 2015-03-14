@@ -1,6 +1,9 @@
 body {
- margin: 0;
-}#end-screen {
+  background: #fff;
+  margin: 0;
+}
+
+#end-screen {
   display: none;
 }
 
@@ -35,5 +38,5 @@ body {
 #game-canvas {
    width: 100%;
    height: auto;
-   background: #000;;
+   background: #fff;
 }
