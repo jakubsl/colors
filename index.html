@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>colors</title>
+  <meta charset="utf-8" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div id="menu-container">
+    <div id="intro-screen">
+      <div id="controls-info">
+        <p>Tap a matching colour</p>
+      </div>
+      <button class="start-button">Start Game</button>
+    </div>
+    <div id="end-screen">
+      <h1>Game over</h1>
+      <h2 id="score-container"></h2>
+      <button class="start-button">Try Again</button>
+    </div>
+  </div>
+  <div class="wrapper">
+  <div class="container">
+    <div class="canvas-container">
+      <canvas id="game-canvas" height="800" width="600"></canvas>
+    </div>
+  </div>
+  </div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
