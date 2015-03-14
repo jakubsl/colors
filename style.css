@@ -1,6 +1,11 @@
 body {
   background: #fff;
+
   margin: 0;
+}
+p {
+  color: #000;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 #end-screen {
@@ -9,12 +14,12 @@ body {
 
 #menu-container {
   color: #fff;
-  left: 35%;
-  margin: auto;
+  left: 50%;
+  margin-left: -80px;
   position: absolute;
   text-align: center;
   top: 40%;
-  width:30%;
+  width: 160px;
   z-index: 999;
 }
 

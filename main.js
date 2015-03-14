@@ -28,7 +28,7 @@ var initialize = function() {
   pads.cols = 2;
 
   ctx.beginPath();
-  ctx.arc(canvas.width/2, height/3 - height/8, height/8, 0, 2 * Math.PI, false);
+  ctx.arc(canvas.width/2, height/3 - height/8, 90, 0, 2 * Math.PI, false);
   var nRandom = Math.floor(Math.random() * 3) + 1
   currentColor = colors[nRandom-1];
   ctx.fillStyle = currentColor;
@@ -47,7 +47,7 @@ var initialize = function() {
   for (i = 1; i < pads.rows+1; i++) {
     for (j = 1; j < pads.cols+1; j++){
       ctx.beginPath();
-      ctx.arc(canvas.width*i/2 - canvas.width/3 +canvas.width/12, ((j+1)/3)*canvas.height - height/3 +height/8, height/8, 0, 2 * Math.PI, false);
+      ctx.arc(canvas.width*i/2 - canvas.width/3 +canvas.width/12, ((j+1)/3)*canvas.height - height/3 +height/8, 90, 0, 2 * Math.PI, false);
       ctx.fillStyle = colorPos[i*i+j-1*i-1]
       ctx.fill();
     }
@@ -87,22 +87,22 @@ function checkForClicks() {
     if (mouse.x < canvasContainerWidth/2 && mouse.y < canvasContainerHeight/3*2){
       ctx.clearRect(0,canvas.height/3,canvas.width/2,canvas.height/3);
       ctx.beginPath();
-      ctx.arc(canvas.width/2 - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - height/3 +height/8, height/8, 0, 2 * Math.PI, false);
+      ctx.arc(canvas.width/2 - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - height/3 +height/8, 90, 0, 2 * Math.PI, false);
       redrawSubColor(0)
     } else if (mouse.x > canvasContainerWidth/2 && mouse.y < canvasContainerHeight/3*2){
       ctx.clearRect(canvas.width/2,canvas.height/3,canvas.width/2,canvas.height/3);
       ctx.beginPath();
-      ctx.arc(canvas.width - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - height/3 +height/8, height/8, 0, 2 * Math.PI, false);
+      ctx.arc(canvas.width - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - height/3 +height/8, 90, 0, 2 * Math.PI, false);
       redrawSubColor(1);
     } else if (mouse.x < canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3){
       ctx.clearRect(0,canvas.height/3*2,canvas.width/2,canvas.height/3);
       ctx.beginPath();
-      ctx.arc(canvas.width/2 - canvas.width/3 +canvas.width/12, canvas.height - height/3 +height/8, height/8, 0, 2 * Math.PI, false);
+      ctx.arc(canvas.width/2 - canvas.width/3 +canvas.width/12, canvas.height - height/3 +height/8, 90, 0, 2 * Math.PI, false);
       redrawSubColor(2);
     } else if (mouse.x > canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3){
       ctx.clearRect(canvas.width/2,canvas.height/3*2,canvas.width/2,canvas.height/3);
       ctx.beginPath();
-      ctx.arc(canvas.width - canvas.width/3 +canvas.width/12, canvas.height - height/3 +height/8, height/8, 0, 2 * Math.PI, false);
+      ctx.arc(canvas.width - canvas.width/3 +canvas.width/12, canvas.height - height/3 +height/8, 90, 0, 2 * Math.PI, false);
       redrawSubColor(3);
     }
     return false;
@@ -135,7 +135,7 @@ function redrawSubColor(position) {
 function redrawMainColor(upcomingMainColor) {
   ctx.clearRect(0,0,canvas.width,canvas.height/3);
   ctx.beginPath();
-  ctx.arc(canvas.width/2, height/3 - height/8, height/8, 0, 2 * Math.PI, false);
+  ctx.arc(canvas.width/2, height/3 - height/8, 90, 0, 2 * Math.PI, false);
   ctx.fillStyle = upcomingMainColor;
   currentColor = upcomingMainColor;
   ctx.fill();
