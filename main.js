@@ -28,7 +28,7 @@ var initialize = function() {
   pads.cols = 2;
 
   ctx.beginPath();
-  ctx.arc(canvas.width/2, height/3 - height/8, 90, 0, 2 * Math.PI, false);
+  ctx.arc(canvas.width/2, canvas.height/3 - 100, 100, 0, 2 * Math.PI, false);
   var nRandom = Math.floor(Math.random() * 3) + 1
   currentColor = colors[nRandom-1];
   ctx.fillStyle = currentColor;
@@ -47,7 +47,7 @@ var initialize = function() {
   for (i = 1; i < pads.rows+1; i++) {
     for (j = 1; j < pads.cols+1; j++){
       ctx.beginPath();
-      ctx.arc(canvas.width*i/2 - canvas.width/3 +canvas.width/12, ((j+1)/3)*canvas.height - height/3 +height/8, 90, 0, 2 * Math.PI, false);
+      ctx.arc(canvas.width*i/2 - canvas.width/3 +canvas.width/12, ((j+1)/3)*canvas.height - 100, 100, 0, 2 * Math.PI, false);
       ctx.fillStyle = colorPos[i*i+j-1*i-1]
       ctx.fill();
     }
@@ -112,8 +112,6 @@ function redrawSubColor(position) {
   var selectedColor = colorPos[position];
   var upcomingMainColor = getRandomColor();
   var upcomingSubColor = getRandomColor();
-  console.log(currentColor);
-  console.log(selectedColor)
   if (currentColor == selectedColor) {
     score ++;
     colorPos[position] = upcomingSubColor;
