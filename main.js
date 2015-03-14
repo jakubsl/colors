@@ -52,6 +52,7 @@ var initialize = function() {
       ctx.fill();
     }
   }
+  console.log(colorPos)
   checkForClicks();
 }
   // ctx.beginPath();
@@ -84,21 +85,21 @@ function checkForClicks() {
         y: e.pageY - canvasPosition.y
     }
 
-    if (mouse.x < canvasContainerWidth/2 && mouse.y < canvasContainerHeight/3*2){
+    if (mouse.x < canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3 && mouse.y < canvasContainerHeight/3*2){
       ctx.clearRect(0,canvas.height/3,canvas.width/2,canvas.height/3);
       ctx.beginPath();
       ctx.arc(canvas.width/2 - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 100, 0, 2 * Math.PI, false);
       redrawSubColor(0)
-    } else if (mouse.x > canvasContainerWidth/2 && mouse.y < canvasContainerHeight/3*2){
+    } else if (mouse.x > canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3 && mouse.y < canvasContainerHeight/3*2){
       ctx.clearRect(canvas.width/2,canvas.height/3,canvas.width/2,canvas.height/3);
       ctx.beginPath();
       ctx.arc(canvas.width - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 100, 0, 2 * Math.PI, false);
-      redrawSubColor(1);
+      redrawSubColor(2);
     } else if (mouse.x < canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3){
       ctx.clearRect(0,canvas.height/3*2,canvas.width/2,canvas.height/3);
       ctx.beginPath();
       ctx.arc(canvas.width/2 - canvas.width/3 +canvas.width/12, canvas.height - 100, 100, 0, 2 * Math.PI, false);
-      redrawSubColor(2);
+      redrawSubColor(1);
     } else if (mouse.x > canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3){
       ctx.clearRect(canvas.width/2,canvas.height/3*2,canvas.width/2,canvas.height/3);
       ctx.beginPath();
@@ -110,6 +111,7 @@ function checkForClicks() {
 }
 function redrawSubColor(position) {
   var selectedColor = colorPos[position];
+  console.log(selectedColor)
   var upcomingMainColor = getRandomColor();
   var upcomingSubColor = getRandomColor();
   if (currentColor == selectedColor) {
