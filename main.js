@@ -126,6 +126,7 @@ function redrawSubColor(position) {
     redrawMainColor(upcomingMainColor);
   } else {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.onclick = 0;
     $('#end-screen').show();
     $('#score-container').html('score:'+score);
   }
