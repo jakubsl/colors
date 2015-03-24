@@ -58,23 +58,10 @@
       }
     }
     checkForClicks();
-  }
-    // ctx.beginPath();
-    // ctx.moveTo(0, canvas.height/3);
-    // ctx.lineTo(canvas.width, canvas.height/3);
-    // ctx.strokeStyle = '#ffffff';
-    // ctx.stroke();
-    // ctx.beginPath();
-    // ctx.moveTo(0, canvas.height/3*2);
-    // ctx.lineTo(canvas.width, canvas.height/3*2);
-    // ctx.strokeStyle = '#ffffff';
-    // ctx.stroke();
 
-    // ctx.beginPath();
-    // ctx.moveTo(canvas.width/2, 0);
-    // ctx.lineTo(canvas.width/2, canvas.height);
-    // ctx.strokeStyle = '#ffffff';
-    // ctx.stroke();
+    refresh = setInterval(redrawScene, 250);
+  }
+
   function checkForClicks() {
     canvas.onclick = function(e) {
       var canvasContainerWidth = canvasContainer.width();
@@ -91,78 +78,71 @@
 
       if (mouse.x < canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3 && mouse.y < canvasContainerHeight/3*2) {
         if (currentColor !== colorPos[0]) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          canvas.onclick = 0;
-          $('#end-screen').show();
-          $('#score-container').html('score:'+score);
+          gameOver();
         } else {
-          ctx.clearRect(0,canvas.height/3,canvas.width/2,canvas.height/3);
-          clearInterval(refresh);
-          ctx.clearRect(0,canvas.height/3,canvas.width/2,canvas.height/3);
-          ctx.beginPath();
-          ctx.arc(canvas.width/2 - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 100, 0, 2 * Math.PI, false);
-          redrawSubColor(0);
-          createExplosion(canvas.width/2 - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 0);
+          colorMatch(0);
+          //createExplosion(canvas.width/2 - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 0);
         }
       } else if (mouse.x > canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3 && mouse.y < canvasContainerHeight/3*2) {
         if (currentColor !== colorPos[2]) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          canvas.onclick = 0;
-          $('#end-screen').show();
-          $('#score-container').html('score:'+score);
+          gameOver();
         } else {
-          ctx.clearRect(canvas.width/2,canvas.height/3,canvas.width/2,canvas.height/3);
-          clearInterval(refresh);
-          ctx.clearRect(canvas.width/2,canvas.height/3,canvas.width/2,canvas.height/3);
-          ctx.beginPath();
-          ctx.arc(canvas.width - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 100, 0, 2 * Math.PI, false);
-          redrawSubColor(2);
-          createExplosion(canvas.width - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 2);
+          colorMatch(2);
+          //createExplosion(canvas.width - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 2);
         }
       } else if (mouse.x < canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3) {
         if (currentColor !== colorPos[1]) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          canvas.onclick = 0;
-          $('#end-screen').show();
-          $('#score-container').html('score:'+score);
+          gameOver();
         } else {
-          ctx.clearRect(0,canvas.height/3*2,canvas.width/2,canvas.height/3);
-          clearInterval(refresh);
-          ctx.clearRect(0,canvas.height/3*2,canvas.width/2,canvas.height/3);
-          ctx.beginPath();
-          ctx.arc(canvas.width/2 - canvas.width/3 +canvas.width/12, canvas.height - 100, 100, 0, 2 * Math.PI, false);
-          createExplosion(canvas.width/2 - canvas.width/3 +canvas.width/12, canvas.height - 100, 1);
+          colorMatch(1);
+          //createExplosion(canvas.width/2 - canvas.width/3 +canvas.width/12, canvas.height - 100, 1);
         }
       } else if (mouse.x > canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3) {
         if (currentColor !== colorPos[3]) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          canvas.onclick = 0;
-          $('#end-screen').show();
-          $('#score-container').html('score:'+score);
+          gameOver();
         } else {
-          ctx.clearRect(canvas.width/2,canvas.height/3*2,canvas.width/2,canvas.height/3);
-          clearInterval(refresh);
-          ctx.clearRect(canvas.width/2,canvas.height/3*2,canvas.width/2,canvas.height/3);
-          ctx.beginPath();
-          ctx.arc(canvas.width - canvas.width/3 +canvas.width/12, canvas.height - 100, 100, 0, 2 * Math.PI, false);
-          redrawSubColor(3);
-          createExplosion(canvas.width - canvas.width/3 +canvas.width/12, canvas.height - 100, 3);
+          colorMatch(3);
+          //createExplosion(canvas.width - canvas.width/3 +canvas.width/12, canvas.height - 100, 3);
         }
       }
       return false;
     };
   }
-  function redrawSubColor(position) {
+
+  function redrawScene() {
+    ctx.clearRect(0, 0, canvas.width,canvas.height);
+    ctx.beginPath();
+    ctx.arc(canvas.width/2, canvas.height/3 - 100, 100, 0, 2 * Math.PI, false);
+    ctx.fillStyle = currentColor;
+    ctx.fill();
+
+    for (i = 1; i < pads.rows+1; i++) {
+      for (j = 1; j < pads.cols+1; j++){
+        ctx.beginPath();
+        ctx.arc(canvas.width*i/2 - canvas.width/3 +canvas.width/12, ((j+1)/3)*canvas.height - 100, 100, 0, 2 * Math.PI, false);
+        ctx.fillStyle = colorPos[i*i+j-1*i-1]
+        ctx.fill();
+      }
+    }
+  }
+
+  function gameOver() {
+    clearInterval(refresh);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.onclick = 0;
+    $('#end-screen').show();
+    $('#score-container').html('score:'+score);
+  }
+  function colorMatch(position) {
+    score ++;
     var upcomingMainColor = getRandomColor();
     var upcomingSubColor = getRandomColor();
-    score ++;
-    colorPos[position] = upcomingSubColor;
     if (colorPos.indexOf(upcomingMainColor) < 0) {
       upcomingSubColor = upcomingMainColor;
       colorPos[position] = upcomingSubColor;
     }
-    ctx.fillStyle = upcomingSubColor;
-    ctx.fill();
+    colorPos[position] = upcomingSubColor;
+    currentColor = upcomingMainColor;
     redrawMainColor(upcomingMainColor);
   }
 
@@ -173,6 +153,7 @@
     ctx.fillStyle = upcomingMainColor;
     currentColor = upcomingMainColor;
     ctx.fill();
+    redrawScene();
   }
 
   function getRandomColor() {
