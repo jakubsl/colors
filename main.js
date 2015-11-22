@@ -8,9 +8,10 @@
   var canvasContainer;
   var score;
   var particles = [];
-  var frameRate = 60.0;
-  var frameDelay = 1000.0/frameRate;
-  var refresh;
+  var frameRate = 60;
+  var frameDelay = 1000/frameRate;
+  var refreshInterval = 0;
+  var intervalCounter;
 
   var introScreen = function() {
     $( ".start-button" ).click(function() {
@@ -28,7 +29,8 @@
     canvasContainer = $('.canvas-container');
     height = canvasContainer.height();
     width = canvasContainer.width();
-    colors = ['#ff0035', '#48ccff', '#0DFE8F'];
+    //colors = ['#ff0035', '#48ccff', '#0DFE8F'];
+    colors = ['red', 'green', 'blue'];
     pads.rows = 2;
     pads.cols = 2;
 
@@ -81,35 +83,39 @@
           gameOver();
         } else {
           colorMatch(0);
-          //createExplosion(canvas.width/2 - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 0);
+          createExplosion(canvas.width/2 - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 0);
         }
       } else if (mouse.x > canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3 && mouse.y < canvasContainerHeight/3*2) {
         if (currentColor !== colorPos[2]) {
           gameOver();
         } else {
           colorMatch(2);
-          //createExplosion(canvas.width - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 2);
+          createExplosion(canvas.width - canvas.width/3 +canvas.width/12, (2/3)*canvas.height - 100, 2);
         }
       } else if (mouse.x < canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3) {
         if (currentColor !== colorPos[1]) {
           gameOver();
         } else {
           colorMatch(1);
-          //createExplosion(canvas.width/2 - canvas.width/3 +canvas.width/12, canvas.height - 100, 1);
+          createExplosion(canvas.width/2 - canvas.width/3 +canvas.width/12, canvas.height - 100, 1);
         }
       } else if (mouse.x > canvasContainerWidth/2 && mouse.y > canvasContainerHeight/3) {
         if (currentColor !== colorPos[3]) {
           gameOver();
         } else {
           colorMatch(3);
-          //createExplosion(canvas.width - canvas.width/3 +canvas.width/12, canvas.height - 100, 3);
+          createExplosion(canvas.width - canvas.width/3 +canvas.width/12, canvas.height - 100, 3);
         }
       }
       return false;
     };
   }
 
+  //create new function called draw scene and place a call to that one inside
+  //redrawScene. then move the first scene drawing from initialize()
+  //down here so we're not calling it twice
   function redrawScene() {
+    console.log('redrawScene');
     ctx.clearRect(0, 0, canvas.width,canvas.height);
     ctx.beginPath();
     ctx.arc(canvas.width/2, canvas.height/3 - 100, 100, 0, 2 * Math.PI, false);
@@ -137,12 +143,12 @@
     score ++;
     var upcomingMainColor = getRandomColor();
     var upcomingSubColor = getRandomColor();
+    colorPos[position] = upcomingSubColor;
+    currentColor = upcomingMainColor;
     if (colorPos.indexOf(upcomingMainColor) < 0) {
       upcomingSubColor = upcomingMainColor;
       colorPos[position] = upcomingSubColor;
     }
-    colorPos[position] = upcomingSubColor;
-    currentColor = upcomingMainColor;
     redrawMainColor(upcomingMainColor);
   }
 
@@ -163,8 +169,14 @@
   }
 
   function createExplosion(x, y, position) {
-    refresh = setInterval(function() {
-      update(x, y, frameDelay);
+    refreshInterval = setInterval(function() {
+      intervalCounter++;
+      if (intervalCounter < 20){
+        update(x, y, frameDelay);
+      } else {
+        window.clearInterval(refreshInterval);
+        intervalCounter = 0;
+      }
     }, frameDelay);
     var color = colorPos[position];
 
@@ -234,6 +246,7 @@
     ctx.fillStyle = "#FFF";
     ctx.clearRect(x -100, y -100, canvas.width/2, canvas.height/3);
     // update and draw particles
+    console.log()
     for (var i=0; i<particles.length; i++) {
       var particle = particles[i];
       particle.update(frameDelay);
